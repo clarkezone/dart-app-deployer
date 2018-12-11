@@ -1,20 +1,19 @@
 library github_deploying_app;
 
+import 'appconfig.dart';
 import 'application.dart';
 import 'environment_checker.dart';
-import 'config_loader.dart';
 import 'github_hook_listener.dart';
 import 'project_deployer.dart';
 
 main() async {
-  ConfigLoader configLoader = new ConfigLoader();
+  Appconfig configLoader = new Appconfig("config.yaml");
   EnvironmentChecker environmentChecker = new EnvironmentChecker();
 
-  Map config = await configLoader.loadConfig();
   assert(environmentChecker.githubToken != null);
 
-  ProjectDeployer deployer = new ProjectDeployer(config);
-  GithubHookListener hookListener = new GithubHookListener(environmentChecker, config, deployer);
+  ProjectDeployer deployer = new ProjectDeployer();
+  GithubHookListener hookListener = new GithubHookListener(environmentChecker, configLoader, deployer);
 
   Application app = new Application(hookListener);
 

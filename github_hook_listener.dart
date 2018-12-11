@@ -2,22 +2,23 @@ library github_hook_listener;
 
 import 'dart:io';
 import 'dart:convert' show UTF8, JSON;
-import 'package:crypto/crypto.dart' show SHA1, HMAC, CryptoUtils;
+import 'package:crypto/crypto.dart';
 import 'environment_checker.dart';
 import 'project_deployer.dart';
+import 'appconfig.dart';
 
 class GithubHookListener {
   EnvironmentChecker environmentChecker;
-  Map config;
+  Appconfig config;
   ProjectDeployer deployer;
   String targetBranch;
 
   GithubHookListener(this.environmentChecker, this.config, this.deployer) {
-    targetBranch = config["gitTarget"];
+    targetBranch = config.gitTarget;
   }
 
   bool xHubSignatureFitsOurs(String signature, data) {
-    var sha = new HMAC(new SHA1(), UTF8.encode(environmentChecker.githubToken));
+    var sha = new hmac(new Sha1(), UTF8.encode(environmentChecker.githubToken));
     sha.add(data);
     var digest = sha.close();
     var hash = CryptoUtils.bytesToHex(digest);
