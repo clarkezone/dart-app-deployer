@@ -28,7 +28,7 @@ class GithubHookListener {
   bool wasPushOnMaster(String ref) => ref == 'refs/heads/$targetBranch';
 
   listen() async {
-    HttpServer server = await HttpServer.bind(config["clientHostname"], config["listeningPort"]);
+    HttpServer server = await HttpServer.bind(config.clientHostname, config.listeningPort);
     print('listening on localhost, port ${server.port}');
 
     server.listen((HttpRequest request) {
