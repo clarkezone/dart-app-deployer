@@ -42,6 +42,7 @@ class GithubHookListener {
 	}
 
         var payload = json.decode(new String.fromCharCodes(data));
+        print(payload['ref']);
         if (wasPushOnMaster(payload['ref'])) {
           print("Hooked on push on $targetBranch");
           //deployer.resetAndPullBranch()
