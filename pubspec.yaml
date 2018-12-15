@@ -4,3 +4,4 @@ description: A daemon that listens to GitHub push webhook and that auto-redeploy
 dependencies:
   crypto: ^2.0.6
   safe_config: ^2.0.1
+  convert: ^2.0.2

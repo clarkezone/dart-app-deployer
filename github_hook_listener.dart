@@ -1,7 +1,8 @@
 library github_hook_listener;
 
 import 'dart:io';
-import 'dart:convert' show UTF8, JSON;
+import 'dart:convert';
+import 'package:convert/convert.dart';
 import 'package:crypto/crypto.dart';
 import 'environment_checker.dart';
 import 'project_deployer.dart';
@@ -18,10 +19,9 @@ class GithubHookListener {
   }
 
   bool xHubSignatureFitsOurs(String signature, data) {
-    var sha = new hmac(new Sha1(), UTF8.encode(environmentChecker.githubToken));
-    sha.add(data);
-    var digest = sha.close();
-    var hash = CryptoUtils.bytesToHex(digest);
+    var sha = new Hmac(sha1, utf8.encode(environmentChecker.githubToken));
+    var digest = sha.convert(data);
+    var hash = hex.encode(digest.bytes);
     return signature == "sha1=$hash";
   }
 
@@ -36,17 +36,21 @@ class GithubHookListener {
         if (xHubSignatureFitsOurs(request.headers.value("x-hub-signature"), data)) {
           request.response.close();
         }
+	else {
+		print("signature doesn't match");
+		return;
+	}
 
-        var payload = JSON.decode(new String.fromCharCodes(data));
+        var payload = json.decode(new String.fromCharCodes(data));
         if (wasPushOnMaster(payload['ref'])) {
           print("Hooked on push on $targetBranch");
-          deployer.resetAndPullBranch()
-          .then((_) => deployer.upgradeServerDependencies())
-          .then((_) => deployer.startServer())
-          .then((_) => deployer.deployClient());
+          //deployer.resetAndPullBranch()
+          //.then((_) => deployer.upgradeServerDependencies())
+          //.then((_) => deployer.startServer())
+          //.then((_) => deployer.deployClient());
         }
       });
     });
-    deployer.killServerProcess();
+    //deployer.killServerProcess();
   }
 }

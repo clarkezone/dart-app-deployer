@@ -5,9 +5,11 @@ import 'application.dart';
 import 'environment_checker.dart';
 import 'github_hook_listener.dart';
 import 'project_deployer.dart';
+import 'dart:io';
 
 main() async {
-  Appconfig configLoader = new Appconfig("config.yaml");
+  File file = new File("config.yaml");
+  Appconfig configLoader = new Appconfig(file);
   EnvironmentChecker environmentChecker = new EnvironmentChecker();
 
   assert(environmentChecker.githubToken != null);

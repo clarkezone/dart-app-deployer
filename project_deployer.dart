@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'dart:convert' show UTF8;
+import 'dart:convert';
 import 'dart:async';
 import 'appconfig.dart';
 
@@ -25,8 +25,8 @@ class ProjectDeployer {
   }
 
   void showLogs(Process process) {
-    process.stdout.transform(UTF8.decoder).listen((data) => print(data));
-    process.stderr.transform(UTF8.decoder).listen((data) => print(data));
+    process.stdout.transform(utf8.decoder).listen((data) => print(data));
+    process.stderr.transform(utf8.decoder).listen((data) => print(data));
   }
 
   void showLogsForProcessResult(ProcessResult processResult) {
