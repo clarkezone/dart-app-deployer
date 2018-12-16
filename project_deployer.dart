@@ -13,9 +13,9 @@ class ProjectDeployer {
   var websitePath;
   Process serverProcess;
 
-  ProjectDeployer() {
-    gitTarget = config["gitTarget"];
-    gitWorkingDir = config["gitWorkingDir"];
+  ProjectDeployer(this.config) {
+    gitTarget = config.gitTarget;
+    gitWorkingDir = config.gitWorkingDir;
   }
 
   Future resetAndPullBranch() {

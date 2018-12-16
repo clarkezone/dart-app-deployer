@@ -45,7 +45,7 @@ class GithubHookListener {
         print(payload['ref']);
         if (wasPushOnMaster(payload['ref'])) {
           print("Hooked on push on $targetBranch");
-          deployer.resetAndPullBranch()
+          deployer.resetAndPullBranch();
           //.then((_) => deployer.upgradeServerDependencies())
           //.then((_) => deployer.startServer())
           //.then((_) => deployer.deployClient());
