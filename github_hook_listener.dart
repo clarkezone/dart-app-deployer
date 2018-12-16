@@ -19,7 +19,7 @@ class GithubHookListener {
   }
 
   bool xHubSignatureFitsOurs(String signature, data) {
-    var sha = new Hmac(sha1, utf8.encode(environmentChecker.githubToken));
+    var sha = new Hmac(sha1, utf8.encode(config.githubToken));
     var digest = sha.convert(data);
     var hash = hex.encode(digest.bytes);
     return signature == "sha1=$hash";
@@ -40,12 +40,12 @@ class GithubHookListener {
 		print("signature doesn't match");
 		return;
 	}
-
-        var payload = json.decode(new String.fromCharCodes(data));
+        var payl = new String.fromCharCodes(data);
+        var payload = json.decode(payl);
         print(payload['ref']);
         if (wasPushOnMaster(payload['ref'])) {
           print("Hooked on push on $targetBranch");
-          //deployer.resetAndPullBranch()
+          deployer.resetAndPullBranch()
           //.then((_) => deployer.upgradeServerDependencies())
           //.then((_) => deployer.startServer())
           //.then((_) => deployer.deployClient());
