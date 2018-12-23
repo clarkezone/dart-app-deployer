@@ -8,7 +8,7 @@ import 'project_deployer.dart';
 import 'dart:io';
 
 main() async {
-  File file = new File("config.yaml");
+  File file = new File("/app/bin/config.yaml");
   Appconfig configLoader = new Appconfig(file);
   EnvironmentChecker environmentChecker = new EnvironmentChecker();
 

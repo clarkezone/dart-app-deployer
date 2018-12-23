@@ -1,6 +1,7 @@
 library application;
 
 import 'github_hook_listener.dart';
+import 'dart:async';
 
 class Application {
   GithubHookListener hookListener;
@@ -8,6 +9,9 @@ class Application {
   Application(this.hookListener);
 
   void run() {
-    hookListener.listen();
-  }
+    runZoned(() {
+    hookListener.listen();},
+     onError:(e, stackTrace){}
+    );  
+  } //run
 }
