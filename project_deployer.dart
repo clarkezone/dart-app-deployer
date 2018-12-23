@@ -19,9 +19,9 @@ class ProjectDeployer {
   }
 
   Future resetAndPullBranch() {
-    print("Pulling branch $gitTarget");
-    //workingdir cannont include ~
-    return Process.run("bash", ["-c", "git pull origin/$gitTarget"], workingDirectory: gitWorkingDir)
+    print("Resetting branch");
+    print("WorkingDir:$gitWorkingDir");
+    return Process.run("bash", ["-c", "git pull origin $gitTarget"], workingDirectory: gitWorkingDir)
     .then((Process) => showLogsForProcessResult(Process));
   }
 

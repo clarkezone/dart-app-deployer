@@ -18,6 +18,8 @@ main() async {
 
   GithubHookListener hookListener = new GithubHookListener(environmentChecker, configLoader, deployer);
 
+    //deployer.resetAndPullBranch();
+    //return;
   Application app = new Application(hookListener);
 
   app.run();
